@@ -1,0 +1,68 @@
+@import "../../styles/constants.scss";
+
+.selectvacancy {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    .header {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 0px 20px;
+      .board {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        height: 80px;
+        hr {
+          transform: rotate(90deg);
+          width: 50px;
+        }
+      }
+      .subtitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        font-size: 18px;
+        .subtitle-item {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          margin: 5px;
+        }
+      }
+    }
+    .vacancy-container {
+      display: flex;
+      justify-content: center;
+      height: 540px;
+      width: 1024px;
+      padding: 10px 0px;
+      margin-bottom: 10px;
+    }
+    .vacancy-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .vacancy-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

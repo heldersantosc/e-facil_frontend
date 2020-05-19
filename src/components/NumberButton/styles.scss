@@ -1,0 +1,28 @@
+@import "../../styles/constants.scss";
+
+.numberButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  background-color: white;
+  margin: 5px;
+  user-select: none;
+  cursor: pointer;
+  &:hover {
+    filter: opacity(70%);
+  }
+  .number {
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 80px;
+    width: 80px;
+    border-radius: 80px;
+    cursor: none;
+  }
+}

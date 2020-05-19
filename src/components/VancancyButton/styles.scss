@@ -1,0 +1,46 @@
+@import "../../styles/constants.scss";
+
+.vacancybutton {
+  .btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    height: 70px;
+    width: 50px;
+    margin: 5px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    @media screen and (max-width: 1023px) {
+      cursor: none;
+    }
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+  .blocked {
+    color: transparent;
+    background-color: transparent;
+    border: 1px solid transparent;
+    user-select: none;
+  }
+  .disponible {
+    background-color: $alaranjado;
+    user-select: none;
+  }
+  .indisponible {
+    background-color: grey;
+    user-select: none;
+  }
+  .wheelchair {
+    background-color: $azulLinear;
+    user-select: none;
+  }
+  .wheelchair-logo {
+    height: 25px;
+  }
+}

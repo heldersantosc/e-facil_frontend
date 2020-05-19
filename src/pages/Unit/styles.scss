@@ -1,0 +1,78 @@
+@import "../../styles/constants.scss";
+
+.unit {
+  height: 100vh;
+  background-color: $azulBackground;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 5% 0px 5%;
+    .btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 26px;
+      height: 100px;
+      background-color: $alaranjado;
+      border-radius: 0.5em;
+      padding: 0px 40px;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      &:hover {
+        filter: brightness(90%);
+      }
+    }
+  }
+  .content-list {
+    display: flex;
+    flex-direction: column;
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    margin: 0px 7%;
+    max-height: 0px;
+    background-color: white;
+    overflow: hidden;
+    visibility: visible;
+    transition: max-height 0.5s;
+
+    &::-webkit-scrollbar {
+      position: absolute;
+      width: 5px;
+      padding: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: lightgray;
+      border: none;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: lightgray;
+    }
+    ul button li {
+      display: flex;
+      align-items: center;
+      padding: 0px 20px;
+      list-style-type: none;
+      height: 100px;
+      user-select: none;
+      cursor: pointer;
+      &:hover {
+        background-color: lightgrey;
+      }
+    }
+  }
+  .collapse {
+    max-height: 350px;
+    overflow-y: auto;
+  }
+  .unit-list {
+    display: flex;
+    flex-direction: column;
+  }
+}

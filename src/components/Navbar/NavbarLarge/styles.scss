@@ -1,0 +1,14 @@
+@import "../../../styles/constants.scss";
+
+.navbar {
+  height: 50px;
+  background-color: $navbarBackground;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .navbar-logo {
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -1,0 +1,15 @@
+@import "../../styles/constants.scss";
+
+.splashscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(-45deg, $azulLinear 50%, $azulBackground 50%);
+  .container {
+    .logo {
+      min-width: 100%;
+      max-width: 320px;
+    }
+  }
+}

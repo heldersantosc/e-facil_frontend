@@ -1,0 +1,37 @@
+@import "../../styles/constants.scss";
+
+.optionButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  background-color: white;
+  margin: 5px;
+  user-select: none;
+  cursor: pointer;
+  &:hover {
+    filter: opacity(70%);
+  }
+  .optionCharacter {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .icon {
+    margin-bottom: -10px;
+    margin-left: -5px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 80px;
+    width: 80px;
+    border-radius: 80px;
+  }
+}
+.ok {
+  background-color: #27ae60;
+  color: white;
+}
+.text-black {
+  color: black;
+}

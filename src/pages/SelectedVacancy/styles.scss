@@ -1,0 +1,90 @@
+@import "../../styles/constants.scss";
+
+.selectedvacancy {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    .panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      height: 80%;
+      width: 100%;
+      margin: 5%;
+      padding: 5%;
+      border-radius: 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      .panel-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        .card {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          height: 400px;
+          width: 100%;
+
+          .title {
+            font-size: 42px;
+            font-weight: bold;
+          }
+          .arrow {
+            margin-top: -40%;
+          }
+        }
+
+        .btn {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 60px;
+          font-weight: bold;
+          color: white;
+          height: 70%;
+          width: 70%;
+          margin: 0px 10px;
+          border: 2px solid white;
+          border-radius: 20px;
+
+          &:hover {
+            filter: brightness(80%);
+          }
+        }
+        .blocked {
+          color: transparent;
+          background-color: transparent;
+          border: 1px solid transparent;
+          user-select: none;
+        }
+        .disponible {
+          background-color: $alaranjado;
+          user-select: none;
+        }
+        .indisponible {
+          background-color: grey;
+          user-select: none;
+        }
+        .wheelchair {
+          font-size: 80px;
+          background-color: $azulLinear;
+          user-select: none;
+        }
+        .wheelchair-logo {
+          height: 100px;
+        }
+        .no-border {
+          border: none;
+        }
+      }
+    }
+  }
+}

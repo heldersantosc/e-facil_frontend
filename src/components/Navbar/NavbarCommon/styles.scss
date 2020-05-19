@@ -1,0 +1,26 @@
+@import "../../../styles/constants.scss";
+
+.navbarcommon {
+  height: 50px;
+  background-color: $navbarBackground;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px 10px;
+  .backButton {
+    display: flex;
+    height: 50px;
+    margin-right: auto;
+  }
+  .unit-info {
+    margin-right: auto;
+  }
+  .navbar-logo {
+    width: 150px;
+
+    + img {
+      width: 120px;
+      margin-left: auto;
+    }
+  }
+}
