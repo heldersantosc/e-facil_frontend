@@ -38,7 +38,7 @@ export default function SelectVacancy() {
           <div className="board txt-white">
             <h1>{floor}</h1>
             <hr />
-            <h1>VAGAS: 42</h1>
+            <h1>VAGAS: 42 </h1>
           </div>
           <div className="subtitle txt-white">
             <div className="subtitle-item">
