@@ -7,7 +7,8 @@ import Navbarcommon from "../../components/Navbar/NavbarCommon";
 import VacancyButton from "../../components/VancancyButton";
 import FooterLine from "../../components/FooterLine";
 import matriz from "./vacancies.json";
-import background from "../../assets/UNIDADE 11 - S1.jpg";
+import bkg from "../../assets/UNIDADE 11 - S1.jpg";
+import bk2 from "./UNIDADE 11 - S1.jpg";
 
 export default function SelectVacancy() {
   const [floor, setFloor] = useState();
@@ -54,7 +55,9 @@ export default function SelectVacancy() {
         </div>
         <div
           className="vacancy-container"
-          style={{ backgroundImage: `url(${background})` }}
+          style={{
+            backgroundImage: `url("${bk2}")`,
+          }}
         >
           <div className="vacancy-group">
             <div className="vacancy-row">

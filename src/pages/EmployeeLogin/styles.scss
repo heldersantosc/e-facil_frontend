@@ -1,0 +1,69 @@
+@import "../../styles/constants.scss";
+
+.login {
+  height: 100vh;
+  background-color: $azulBackground;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 90vh;
+    margin: 10px 5%;
+    @media screen and (max-width: 1023px) {
+      flex-direction: column;
+    }
+    .card {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      align-items: center;
+      height: 520px;
+      width: 600px;
+      background-color: $alaranjado;
+      margin: 5px;
+      border-radius: 10px;
+      text-align: center;
+      padding: 10px 0px;
+      @media screen and (max-width: 1023px) {
+        width: 380px;
+        flex-direction: column;
+      }
+      @media screen and (max-width: 992px) {
+        width: 320px;
+        flex-direction: column;
+      }
+    }
+    .keyboard {
+      .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .user {
+      .round {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 250px;
+        height: 250px;
+        border-radius: 250px;
+        background-color: white;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.inputMatricula {
+  font-size: 26px;
+  font-weight: bold;
+  padding: 0;
+  height: 80px;
+  width: 80%;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}

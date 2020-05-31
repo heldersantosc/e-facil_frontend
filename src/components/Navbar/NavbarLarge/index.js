@@ -16,7 +16,12 @@ export default function NavbarLarge() {
     <nav className="navbar">
       <img className="navbar-logo" src={logo1} alt="" />
       <h1>{unitName}</h1>
-      <img className="navbar-logo" src={logo2} alt="" />
+      <img
+        className="navbar-logo"
+        style={{ width: "120px" }}
+        src={logo2}
+        alt=""
+      />
     </nav>
   );
 }
