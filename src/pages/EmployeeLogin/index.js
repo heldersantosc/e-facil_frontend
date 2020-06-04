@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import ReactCSSTransitionGroup from "react-transition-group";
-import { IoMdPerson } from "react-icons/io";
+import { FiLock } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 
 import "./styles.scss";
@@ -9,7 +9,7 @@ import NavbarLarge from "../../components/Navbar/NavbarLarge";
 import NumberButton from "../../components/NumberButton";
 import KeyboardOption from "../../components/KeyboardOption";
 
-export default function Login() {
+export default function EmployeeLogin() {
   const [matricula, setMatricula] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
   const history = useHistory();
@@ -32,7 +32,7 @@ export default function Login() {
     } else {
       localStorage.setItem("permissionAccess", true);
       setInputVisible(true);
-      history.push("/checkaccess");
+      history.push("/selectunit");
     }
   }
 
@@ -95,8 +95,9 @@ export default function Login() {
         </div>
         <div className="card user">
           <div className="round">
-            <IoMdPerson size={200} color="#fa733b" />
+            <FiLock size={200} color="#fa733b" />
           </div>
+          <h1>Acesso Restrito</h1>
           {inputVisible ? (
             <>
               <input

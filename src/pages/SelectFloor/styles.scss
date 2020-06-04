@@ -43,68 +43,39 @@
         width: 480px;
         margin: 5px;
         border-radius: 10px;
-        background-color: $alaranjado;
         user-select: none;
         box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
+        border: none;
         &:hover {
           filter: brightness(80%);
         }
       }
     }
-
-    /* Edficio */
-    .building {
-      display: flex;
-      flex-direction: column;
-      height: 450px;
-      width: 500px;
-      margin: 0px 5px;
-      padding: 30px 20px 0px 20px;
-      background-color: white;
-      border-radius: 10px 10px 0 0;
-      overflow-y: auto;
-      overflow-x: hidden;
-      &::-webkit-scrollbar {
-        position: absolute;
-        width: 5px;
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 10px;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: white;
-        border: none;
-        border-radius: 10px;
-      }
-      &::-webkit-scrollbar-thumb:hover {
-        background: lightgray;
-      }
-      .board {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-        color: $verde-limao;
-        height: 100%;
-        width: 100%;
-        margin: 10px 0px;
-        hr {
-          transform: rotate(90deg);
-          width: 10%;
-        }
-      }
-
-      .entrance {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: baseline;
-        .door {
-          height: 80px;
-          width: 40%;
-          background-color: black;
-        }
-      }
+    .blocked {
+      color: transparent;
+      background-color: transparent;
+      border: 1px solid transparent;
+      user-select: none;
+      cursor: pointer;
+    }
+    .disponible {
+      background-color: $alaranjado;
+      user-select: none;
+      cursor: pointer;
+    }
+    .indisponible {
+      background-color: grey;
+      user-select: none;
+      cursor: pointer;
+    }
+    .wheelchair {
+      background-color: $azulLinear;
+      user-select: none;
+      cursor: pointer;
+    }
+    .wheelchair-logo {
+      height: 25px;
+      cursor: pointer;
     }
 
     @media screen and (max-width: 1023px) {

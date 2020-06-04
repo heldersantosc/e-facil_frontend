@@ -14,8 +14,10 @@ export default function NavbarLarge() {
   }, []);
   return (
     <nav className="navbar">
-      <img className="navbar-logo" src={logo1} alt="" />
-      <h1>{unitName}</h1>
+      <a href="/">
+        <img className="navbar-logo" src={logo1} alt="" />
+      </a>
+      <h1>UNIDADE {unitName}</h1>
       <img
         className="navbar-logo"
         style={{ width: "120px" }}

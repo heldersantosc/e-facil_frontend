@@ -6,30 +6,62 @@ import "./styles.scss";
 import Navbarcommon from "../../components/Navbar/NavbarCommon";
 import VacancyButton from "../../components/VancancyButton";
 import FooterLine from "../../components/FooterLine";
-import matriz from "./vacancies.json";
-import bkg from "../../assets/UNIDADE 11 - S1.jpg";
-import bk2 from "./UNIDADE 11 - S1.jpg";
+import api from "../../services/api";
+import bkg from "./UNIDADE 11 - S1.jpg";
 
 export default function SelectVacancy() {
   const [floor, setFloor] = useState();
-  const [permission, setPermission] = useState();
+  const [id_unidade_andar, setUnidadeAndar] = useState();
+  const [vacancyList, setVacancyList] = useState([]);
   const history = useHistory();
-  const vacancies = matriz;
 
-  function selectVacancy(vacancySelected, vacancyStatus) {
+  async function selectVacancy(
+    id_vaga,
+    vacancySelected,
+    vacancyStatus,
+    vacancyAccessibility
+  ) {
     if (vacancyStatus === "blocked" || vacancyStatus === "indisponible") {
       alert("Vaga Indisponível");
     } else {
       localStorage.setItem("vacancySelected", vacancySelected);
       localStorage.setItem("vacancyStatus", vacancyStatus);
-      history.push("/selectedvacancy");
+      localStorage.setItem("vacancyAccessibility", vacancyAccessibility);
+
+      await api
+        .post(`/vacancy/`, {
+          data: {
+            vaga: id_vaga,
+            matricula: localStorage.getItem("matricula"),
+            status: 12,
+            data: "2020-06-01",
+            hora: "20:34:00",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          history.push("/selectedvacancy");
+        });
     }
   }
 
   useEffect(() => {
-    setPermission(localStorage.getItem("permissionAccess"));
+    async function getVacancy() {
+      await api.get(`/vacancies/${id_unidade_andar}`, {}).then((response) => {
+        setVacancyList(response.data);
+      });
+    }
+
+    localStorage.setItem(
+      "id_unidade_andar",
+      `${localStorage.getItem("unitName")}-${localStorage.getItem(
+        "floorSelected"
+      )}`
+    );
+    setUnidadeAndar(localStorage.getItem("id_unidade_andar"));
     setFloor(localStorage.getItem("floorSelected"));
-  }, [history, floor]);
+    getVacancy();
+  }, [history, floor, id_unidade_andar]);
 
   return (
     <div className="selectvacancy">
@@ -43,34 +75,58 @@ export default function SelectVacancy() {
           </div>
           <div className="subtitle txt-white">
             <div className="subtitle-item">
-              <VacancyButton status={"disponible"} number={""} /> Disponível
+              <VacancyButton
+                status={"disponible"}
+                number={""}
+                accessibility={0}
+              />
+              Disponível
             </div>
             <div className="subtitle-item">
-              <VacancyButton status={"indisponible"} number={""} /> Indisponível
+              <VacancyButton
+                status={"indisponible"}
+                number={""}
+                accessibility={0}
+              />
+              Indisponível
             </div>
             <div className="subtitle-item">
-              <VacancyButton status={"wheelchair"} number={""} /> Acessibilidade
+              <VacancyButton
+                status={"wheelchair"}
+                number={""}
+                accessibility={1}
+              />
+              Acessibilidade
             </div>
           </div>
         </div>
         <div
           className="vacancy-container"
           style={{
-            backgroundImage: `url("${bk2}")`,
+            backgroundImage: `url("${bkg}")`,
           }}
         >
           <div className="vacancy-group">
             <div className="vacancy-row">
-              {vacancies.map((vacancy) => (
+              {vacancyList.map((vacancy) => (
                 <button
-                  key={vacancy.number}
+                  // key={`${vacancy.id_unidade_andar}-${vacancy.vaga}`}
+                  key={vacancy.id_vaga}
                   type="button"
                   className="no-button"
-                  onClick={() => selectVacancy(vacancy.number, vacancy.status)}
+                  onClick={() =>
+                    selectVacancy(
+                      vacancy.id_vaga,
+                      vacancy.vaga,
+                      vacancy.status,
+                      vacancy.acessibilidade
+                    )
+                  }
                 >
                   <VacancyButton
+                    number={vacancy.vaga}
                     status={vacancy.status}
-                    number={vacancy.number}
+                    accessibility={vacancy.acessibilidade}
                   />
                 </button>
               ))}

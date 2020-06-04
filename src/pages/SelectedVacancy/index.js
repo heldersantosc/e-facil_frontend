@@ -12,7 +12,7 @@ export default function SelectedVacancy() {
   const [vacancy, setVacancy] = useState();
   const [status, setStatus] = useState();
   const [accessibilityStatus, setAccessibilityStatus] = useState("");
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function SelectedVacancy() {
           <div className="panel-item">
             <div className="card">
               <h1 className="title">Andar</h1>
-              {count}
+
               <div className="btn">{floor}</div>
             </div>
             <div className="card">
@@ -55,9 +55,7 @@ export default function SelectedVacancy() {
                     src={wheelchair}
                     alt="Accessibilidade"
                   ></img>
-                ) : (
-                  ""
-                )}
+                ) : null}
                 {vacancy}
               </div>
             </div>

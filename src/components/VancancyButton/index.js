@@ -11,14 +11,14 @@ export default function VacancyButton(props) {
   useEffect(() => {
     setStatus(props.status);
     setNumber(props.number);
-    if (props.status === "wheelchair") {
+    if (props.accessibility === 1) {
       setAccessibilityStatus(true);
     }
   }, [status, number, props]);
 
   return (
     <div className="vacancybutton">
-      <div className={`btn ${status}`}>
+      <div className={`btn ${accessibilityStatus ? "wheelchair" : status}`}>
         {accessibilityStatus ? (
           <>
             <img className="wheelchair-logo" src={wheelchair} alt="" />
@@ -26,7 +26,6 @@ export default function VacancyButton(props) {
         ) : (
           <></>
         )}
-
         {number}
       </div>
     </div>

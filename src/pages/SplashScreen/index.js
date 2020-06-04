@@ -12,7 +12,7 @@ export default function SplashScreen() {
   useEffect(() => {
     localStorage.clear();
     const timer = setTimeout(() => {
-      history.push("/selectunit");
+      history.push("/employee-login");
     }, 5000);
     return () => clearTimeout(timer);
   });

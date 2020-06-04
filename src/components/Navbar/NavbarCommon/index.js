@@ -19,7 +19,7 @@ export default function NavbarCommon(props) {
       <Link className="backButton" to={props.path ? props.path : "/login"}>
         <img height="100%" src={logo3} alt="" />
       </Link>
-      <h1 className="unit-info">{unitName}</h1>
+      <h1 className="unit-info">UNIDADE {unitName}</h1>
       <img className="navbar-logo" src={logo1} alt="" />
       <img className="navbar-logo" src={logo2} alt="" />
     </nav>

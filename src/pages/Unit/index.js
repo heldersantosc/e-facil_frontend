@@ -18,6 +18,7 @@ export default function Unit() {
 
   function chooseUnit(unitName) {
     localStorage.setItem("unitName", unitName);
+
     history.push("/login");
   }
 
@@ -45,11 +46,11 @@ export default function Unit() {
           {unitList.map((unit) => (
             <button
               className="no-button"
-              key={unit.id}
-              onClick={() => chooseUnit(unit.name)}
+              key={unit.id_unidade_andar}
+              onClick={() => chooseUnit(unit.unidade)}
             >
               <li>
-                <strong> {unit.name} </strong>
+                <strong> Unidade {unit.unidade} </strong>
               </li>
             </button>
           ))}

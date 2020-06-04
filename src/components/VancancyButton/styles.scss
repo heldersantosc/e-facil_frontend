@@ -27,20 +27,25 @@
     background-color: transparent;
     border: 1px solid transparent;
     user-select: none;
+    cursor: pointer;
   }
   .disponible {
     background-color: $alaranjado;
     user-select: none;
+    cursor: pointer;
   }
   .indisponible {
     background-color: grey;
     user-select: none;
+    cursor: pointer;
   }
   .wheelchair {
     background-color: $azulLinear;
     user-select: none;
+    cursor: pointer;
   }
   .wheelchair-logo {
     height: 25px;
+    cursor: pointer;
   }
 }

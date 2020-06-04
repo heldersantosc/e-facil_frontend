@@ -30,6 +30,7 @@ export default function Login() {
   function checkAccess() {
     if (matricula.length < 8) {
     } else {
+      localStorage.setItem("matricula", matricula);
       localStorage.setItem("permissionAccess", true);
       setInputVisible(true);
       history.push("/checkaccess");
@@ -97,6 +98,7 @@ export default function Login() {
           <div className="round">
             <IoMdPerson size={200} color="#fa733b" />
           </div>
+          <h1>ALUNO</h1>
           {inputVisible ? (
             <>
               <input
