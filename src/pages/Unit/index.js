@@ -29,8 +29,12 @@ export default function Unit() {
   }
 
   useEffect(() => {
-    getUnit();
-  }, []);
+    if (localStorage.getItem("permissionAccess") === "true") {
+      getUnit();
+    } else {
+      history.push("/employee-login");
+    }
+  }, [history]);
 
   return (
     <div className="unit">

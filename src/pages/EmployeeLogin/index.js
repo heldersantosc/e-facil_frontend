@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import ReactCSSTransitionGroup from "react-transition-group";
 import { FiLock } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
+import api from "../../services/api";
 
 import "./styles.scss";
 
@@ -12,6 +13,7 @@ import KeyboardOption from "../../components/KeyboardOption";
 export default function EmployeeLogin() {
   const [matricula, setMatricula] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
+  const [colaborador, setColaborador] = useState({});
   const history = useHistory();
 
   function handleKeyboard(numberValue) {
@@ -24,21 +26,42 @@ export default function EmployeeLogin() {
     setMatricula(matricula.slice(0, -1));
     if (matricula.length <= 1) {
       setInputVisible(false);
+      setColaborador({ auth: "", access: false, name: "" });
     }
   }
 
-  function checkAccess() {
-    if (matricula.length < 8) {
+  async function checkAccess() {
+    if (matricula.length === 8) {
+      await api
+        .post("/authorization", {
+          acesso: "colaborador",
+          matricula: matricula,
+        })
+        .then((response) => {
+          setColaborador(response.data);
+          localStorage.setItem("permissionAccess", true);
+          localStorage.setItem("colaborador", response.data.name);
+          setTimeout(() => {
+            goToUnitPage();
+          }, 3000);
+        })
+        .catch((err) => {
+          setColaborador({ auth: "", access: false, name: "ACESSO NEGADO" });
+          localStorage.setItem("permissionAccess", false);
+          setMatricula("");
+          setInputVisible(false);
+        });
     } else {
-      localStorage.setItem("permissionAccess", true);
-      setInputVisible(true);
-      history.push("/selectunit");
+      setColaborador({ auth: "", access: false, name: "ACESSO NEGADO" });
+      localStorage.setItem("permissionAccess", false);
     }
   }
 
-  useEffect(() => {
-    //localStorage.clear();
-  }, []);
+  function goToUnitPage() {
+    history.push("/selectunit");
+  }
+
+  useEffect(() => {}, []);
 
   return (
     <div className="login">
@@ -98,6 +121,7 @@ export default function EmployeeLogin() {
             <FiLock size={200} color="#fa733b" />
           </div>
           <h1>Acesso Restrito</h1>
+          <h1>{colaborador.name}</h1>
           {inputVisible ? (
             <>
               <input
@@ -111,9 +135,7 @@ export default function EmployeeLogin() {
                 readOnly
               />
             </>
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
       </div>
     </div>

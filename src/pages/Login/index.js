@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import ReactCSSTransitionGroup from "react-transition-group";
 import { IoMdPerson } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+import api from "../../services/api";
 
 import "./styles.scss";
 
@@ -12,6 +13,7 @@ import KeyboardOption from "../../components/KeyboardOption";
 export default function Login() {
   const [matricula, setMatricula] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
+  const [aluno, setAluno] = useState({});
   const history = useHistory();
 
   function handleKeyboard(numberValue) {
@@ -24,22 +26,40 @@ export default function Login() {
     setMatricula(matricula.slice(0, -1));
     if (matricula.length <= 1) {
       setInputVisible(false);
+      setAluno({ auth: "", access: false, name: "" });
     }
   }
 
-  function checkAccess() {
-    if (matricula.length < 8) {
+  async function checkAccess() {
+    if (matricula.length === 8) {
+      await api
+        .post("/authorization", {
+          acesso: "aluno",
+          matricula: matricula,
+        })
+        .then((response) => {
+          setAluno(response.data);
+          localStorage.setItem("aluno", response.data.name);
+          setTimeout(() => {
+            goToSelectFloor();
+          }, 3000);
+        })
+        .catch((err) => {
+          setAluno({ auth: "", access: false, name: "ACESSO NEGADO" });
+          localStorage.setItem("permissionAccess", false);
+          setMatricula("");
+          setInputVisible(false);
+        });
     } else {
       localStorage.setItem("matricula", matricula);
-      localStorage.setItem("permissionAccess", true);
       setInputVisible(true);
-      history.push("/checkaccess");
     }
   }
+  function goToSelectFloor() {
+    history.push("/checkaccess");
+  }
 
-  useEffect(() => {
-    //localStorage.clear();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="login">
@@ -99,6 +119,7 @@ export default function Login() {
             <IoMdPerson size={200} color="#fa733b" />
           </div>
           <h1>ALUNO</h1>
+          <h1>{aluno.name}</h1>
           {inputVisible ? (
             <>
               <input
@@ -112,9 +133,7 @@ export default function Login() {
                 readOnly
               />
             </>
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
       </div>
     </div>
