@@ -35,12 +35,11 @@ export default function SelectVacancy() {
 
       /** envia pra rota via post os dados escolhidos */
       await api
-        .post(`/vacancy/`, {
+        .post(`/reservations/`, {
           data: {
             vaga: id_vaga,
             matricula: localStorage.getItem("matricula"),
             status: 12,
-            data: "2020-06-01",
             hora: "20:34:00",
           },
         })
@@ -48,6 +47,9 @@ export default function SelectVacancy() {
           console.log(response);
           /** se tudo der certo, ele mostra a tela da vaga escolhida */
           history.push("/selectedvacancy");
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
   }

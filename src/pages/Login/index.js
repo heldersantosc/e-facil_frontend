@@ -45,6 +45,7 @@ export default function Login() {
           matricula: matricula,
         })
         .then((response) => {
+          console.log(response);
           setAluno(response.data);
           localStorage.setItem("aluno", response.data.name);
           localStorage.setItem("matricula", matricula);
