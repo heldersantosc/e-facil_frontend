@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import ReactCSSTransitionGroup from "react-transition-group";
 import { IoMdPerson } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import api from "../../services/api";
@@ -10,18 +9,23 @@ import NavbarLarge from "../../components/Navbar/NavbarLarge";
 import NumberButton from "../../components/NumberButton";
 import KeyboardOption from "../../components/KeyboardOption";
 
+/** ininico da função de login do aluno */
 export default function Login() {
   const [matricula, setMatricula] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
   const [aluno, setAluno] = useState({});
   const history = useHistory();
 
+  /** função para inserir a matricula */
   function handleKeyboard(numberValue) {
     if (matricula.length < 8) {
       setMatricula(matricula + numberValue);
+      /** exibe o input */
       setInputVisible(true);
     }
   }
+
+  /** deleta a matricula de tras pra frente */
   function deleteCharacter() {
     setMatricula(matricula.slice(0, -1));
     if (matricula.length <= 1) {
@@ -30,8 +34,11 @@ export default function Login() {
     }
   }
 
+  /** verifica se a matricula informada é valida ou nao   */
   async function checkAccess() {
+    /** verifica se o tamanho da matricula tem 8 digitos */
     if (matricula.length === 8) {
+      /** executa função que chama o backend */
       await api
         .post("/authorization", {
           acesso: "aluno",
@@ -40,6 +47,8 @@ export default function Login() {
         .then((response) => {
           setAluno(response.data);
           localStorage.setItem("aluno", response.data.name);
+          localStorage.setItem("matricula", matricula);
+          /** delay de 3 segundos */
           setTimeout(() => {
             goToSelectFloor();
           }, 3000);
@@ -51,10 +60,12 @@ export default function Login() {
           setInputVisible(false);
         });
     } else {
-      localStorage.setItem("matricula", matricula);
+      /** oculta o input de matricula */
       setInputVisible(true);
     }
   }
+
+  /** informa que a matricula é valida */
   function goToSelectFloor() {
     history.push("/checkaccess");
   }

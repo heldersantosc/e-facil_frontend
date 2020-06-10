@@ -3,18 +3,22 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import "./styles.scss";
+import bkg from "./UNIDADE 11 - S1.jpg";
+
 import Navbarcommon from "../../components/Navbar/NavbarCommon";
 import VacancyButton from "../../components/VancancyButton";
 import FooterLine from "../../components/FooterLine";
-import api from "../../services/api";
-import bkg from "./UNIDADE 11 - S1.jpg";
 
+import api from "../../services/api";
+
+/** inicio da função de selecionar a vaga */
 export default function SelectVacancy() {
-  const [floor, setFloor] = useState();
+  const [floor] = useState(localStorage.getItem("floorSelected"));
   const [id_unidade_andar, setUnidadeAndar] = useState();
   const [vacancyList, setVacancyList] = useState([]);
   const history = useHistory();
 
+  /** função para selecionar a vaga */
   async function selectVacancy(
     id_vaga,
     vacancySelected,
@@ -24,10 +28,12 @@ export default function SelectVacancy() {
     if (vacancyStatus === "blocked" || vacancyStatus === "indisponible") {
       alert("Vaga Indisponível");
     } else {
+      /** define as vagss escolhidas */
       localStorage.setItem("vacancySelected", vacancySelected);
       localStorage.setItem("vacancyStatus", vacancyStatus);
       localStorage.setItem("vacancyAccessibility", vacancyAccessibility);
 
+      /** envia pra rota via post os dados escolhidos */
       await api
         .post(`/vacancy/`, {
           data: {
@@ -40,26 +46,32 @@ export default function SelectVacancy() {
         })
         .then((response) => {
           console.log(response);
+          /** se tudo der certo, ele mostra a tela da vaga escolhida */
           history.push("/selectedvacancy");
         });
     }
   }
 
+  /** função que é executada quando a pagina é acessada */
   useEffect(() => {
+    /** função pra chamada do backend */
     async function getVacancy() {
+      /** recebe uma lista de vagas */
       await api.get(`/vacancies/${id_unidade_andar}`, {}).then((response) => {
         setVacancyList(response.data);
       });
     }
-
+    /** concatena a unidade com o andar */
     localStorage.setItem(
       "id_unidade_andar",
       `${localStorage.getItem("unitName")}-${localStorage.getItem(
         "floorSelected"
       )}`
     );
+    /** pega a variavel id_unidade_andar do navegador */
     setUnidadeAndar(localStorage.getItem("id_unidade_andar"));
-    setFloor(localStorage.getItem("floorSelected"));
+
+    /** chama a função pra listar as vagas */
     getVacancy();
   }, [history, floor, id_unidade_andar]);
 

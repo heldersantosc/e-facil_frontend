@@ -12,6 +12,7 @@ export default function NavbarLarge() {
       setUnitName(localStorage.getItem("unitName").toUpperCase());
     }
   }, []);
+
   return (
     <nav className="navbar">
       <a href="/">

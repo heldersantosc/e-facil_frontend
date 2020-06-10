@@ -10,19 +10,20 @@ import availableLogo from "../../assets/ic_baseline-done-outline.png";
 import notAvailableLogo from "../../assets/mdi_close-outline.png";
 
 export default function CheckAccess() {
-  const [option, setOption] = useState(false);
+  const [option] = useState(localStorage.getItem("permissionAccess"));
   const history = useHistory();
+  console.log(typeof option);
 
   useEffect(() => {
-    setOption(localStorage.getItem("permissionAccess"));
-    if (option === "false" || option === null) {
-      setTimeout(() => {
-        history.push("/login");
-      }, 2000);
-    }
+    /** verifica se tem permissão pra acessa a tela */
     if (option === "true") {
       setTimeout(() => {
         history.push("/selectfloor");
+      }, 2000);
+    }
+    if (option === "false" || option === null) {
+      setTimeout(() => {
+        history.push("/employee-login");
       }, 2000);
     }
   }, [option, history]);
@@ -31,7 +32,7 @@ export default function CheckAccess() {
     <div className="checkaccess">
       <NavbarLarge />
       <div className="container ">
-        {option ? (
+        {option === "true" ? (
           <>
             <h1>Acesso Permitido</h1>
             <img className="checkLogo " src={availableLogo} alt="Available" />

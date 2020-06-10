@@ -7,31 +7,38 @@ import "./styles.scss";
 
 import NavbarLarge from "../../components/Navbar/NavbarLarge";
 
+/** inicio da função de escolher a unidade */
 export default function Unit() {
   const [visible, setVisible] = useState(false);
   const [unitList, setUnitList] = useState([]);
   const history = useHistory();
 
+  /** exibe ou oculta um componete */
   function unitListVisible() {
     setVisible(!visible);
   }
 
+  /** insere no localstorage a unidade que foi clicada */
   function chooseUnit(unitName) {
     localStorage.setItem("unitName", unitName);
 
     history.push("/login");
   }
 
+  /** função para listar as unidades */
   async function getUnit() {
     await api.get("/unit", {}).then((response) => {
       setUnitList(response.data);
     });
   }
 
+  /** hook executado toda vez que a página for aberta */
   useEffect(() => {
+    /** verifica se tem permissão */
     if (localStorage.getItem("permissionAccess") === "true") {
       getUnit();
     } else {
+      /** retorna pro login de colaborador */
       history.push("/employee-login");
     }
   }, [history]);
@@ -42,6 +49,7 @@ export default function Unit() {
       <div className="container" onClick={() => unitListVisible()}>
         <div className="btn">
           Selecione a Unidade
+          {/* exibe o icone */}
           {visible ? <FiMinus /> : <FiPlus />}
         </div>
       </div>

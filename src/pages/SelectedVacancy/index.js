@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
 
 import "./styles.scss";
+
 import Navbarcommon from "../../components/Navbar/NavbarCommon";
 import FooterLine from "../../components/FooterLine";
 import wheelchair from "../../assets/wheelchair.png";
@@ -12,7 +13,6 @@ export default function SelectedVacancy() {
   const [vacancy, setVacancy] = useState();
   const [status, setStatus] = useState();
   const [accessibilityStatus, setAccessibilityStatus] = useState("");
-  //const [count, setCount] = useState(0);
   const history = useHistory();
 
   useEffect(() => {

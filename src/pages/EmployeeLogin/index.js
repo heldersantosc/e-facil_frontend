@@ -1,62 +1,82 @@
 import React, { useState, useEffect } from "react";
-//import ReactCSSTransitionGroup from "react-transition-group";
+/** importando icones do pacote */
 import { FiLock } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
+/** */
+
+/** importando o serviço ( backend ) */
 import api from "../../services/api";
 
+/** importação dos estilos */
 import "./styles.scss";
 
+/** importação dos componentes */
 import NavbarLarge from "../../components/Navbar/NavbarLarge";
 import NumberButton from "../../components/NumberButton";
 import KeyboardOption from "../../components/KeyboardOption";
 
+/** exporta função de login do colaborador */
 export default function EmployeeLogin() {
   const [matricula, setMatricula] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
   const [colaborador, setColaborador] = useState({});
   const history = useHistory();
 
+  //** pega o numero que está sendo digitado */
   function handleKeyboard(numberValue) {
     if (matricula.length < 8) {
       setMatricula(matricula + numberValue);
       setInputVisible(true);
     }
   }
+
+  /** apaga a matricula que está sendo digitada */
   function deleteCharacter() {
+    /** exclui matricula */
     setMatricula(matricula.slice(0, -1));
     if (matricula.length <= 1) {
+      /** oculta o input */
       setInputVisible(false);
+      /** apaga o status do colaborador */
       setColaborador({ auth: "", access: false, name: "" });
     }
   }
 
+  /** verifica se a matricula informada é valida ou nao   */
   async function checkAccess() {
+    /** verifica se a matrica tem 8 digitos */
     if (matricula.length === 8) {
+      /** chama a API do backend */
       await api
         .post("/authorization", {
           acesso: "colaborador",
           matricula: matricula,
         })
         .then((response) => {
+          /** aqui retorna o status do backend */
           setColaborador(response.data);
           localStorage.setItem("permissionAccess", true);
           localStorage.setItem("colaborador", response.data.name);
           setTimeout(() => {
+            /** redireciona para a pagina de unidade */
             goToUnitPage();
           }, 3000);
         })
         .catch((err) => {
+          /** retorna o status de erro do backend */
           setColaborador({ auth: "", access: false, name: "ACESSO NEGADO" });
           localStorage.setItem("permissionAccess", false);
           setMatricula("");
           setInputVisible(false);
         });
     } else {
+      /** se a matricula nao tiver 8 digitos ACESSO NEGADO */
       setColaborador({ auth: "", access: false, name: "ACESSO NEGADO" });
       localStorage.setItem("permissionAccess", false);
     }
   }
 
+  /** redireciona para a pagina de unidade */
   function goToUnitPage() {
     history.push("/selectunit");
   }
@@ -122,6 +142,7 @@ export default function EmployeeLogin() {
           </div>
           <h1>Acesso Restrito</h1>
           <h1>{colaborador.name}</h1>
+          {/* se o inputVisible for true ele entra aqui */}
           {inputVisible ? (
             <>
               <input
