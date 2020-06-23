@@ -46,7 +46,7 @@ export default function SelectFloor() {
       /** chama a função acima  */
       getFloor();
     }
-  }, [history, floor, unit]);
+  }, [history, floor, unit, permission]);
 
   return (
     // inicio de frangmento
