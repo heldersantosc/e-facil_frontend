@@ -9,7 +9,7 @@ import "./styles.scss";
 import availableLogo from "../../assets/ic_baseline-done-outline.png";
 import notAvailableLogo from "../../assets/mdi_close-outline.png";
 
-export default function CheckAccess() {
+export default function CheckOut() {
   const [option] = useState(localStorage.getItem("permissionAccess"));
   const history = useHistory();
 
@@ -17,12 +17,7 @@ export default function CheckAccess() {
     /** verifica se tem permissão pra acessa a tela */
     if (option === "true") {
       setTimeout(() => {
-        history.push("/selectfloor");
-      }, 2000);
-    }
-    if (option === "false" || option === null) {
-      setTimeout(() => {
-        history.push("/employee-login");
+        history.push("/login");
       }, 2000);
     }
   }, [option, history]);
@@ -33,7 +28,7 @@ export default function CheckAccess() {
       <div className="container ">
         {option === "true" ? (
           <>
-            <h1>Acesso Permitido</h1>
+            <h1>Vaga Liberada!</h1>
             <img className="checkLogo " src={availableLogo} alt="Available" />
           </>
         ) : (

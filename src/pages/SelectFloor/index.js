@@ -18,15 +18,19 @@ export default function SelectFloor() {
   const history = useHistory();
 
   /** função pra selecionar o andar  */
-  function handleOption(floorSelected) {
-    if (permission === "true") {
-      setFloor(floorSelected);
-      localStorage.setItem("floorSelected", floorSelected);
-      history.push("/selectvacancy");
-    }
-    if (permission === null) {
-      localStorage.clear();
-      history.push("/employee-login");
+  function handleOption(floorSelected, floorStatus) {
+    if (floorStatus !== "indisponible") {
+      if (permission === "true") {
+        setFloor(floorSelected);
+        localStorage.setItem("floorSelected", floorSelected);
+        history.push("/selectvacancy");
+      }
+      if (permission === null) {
+        localStorage.clear();
+        history.push("/employee-login");
+      }
+    } else {
+      alert("Andar Indisponível");
     }
   }
 
@@ -60,10 +64,14 @@ export default function SelectFloor() {
                 <button
                   key={floor.id_unidade_andar}
                   className={`btn ${floor.status}`}
-                  onClick={() => handleOption(floor.andar)}
+                  onClick={() => handleOption(floor.andar, floor.status)}
                 >
                   {/* exibir o valor das variaveis no floor */}
-                  {floor.andar} | {floor.status.slice(0, 4).toUpperCase()}.
+                  {/* {floor.andar} | {floor.status.slice(0, 4).toUpperCase()}. */}
+                  {floor.andar} |{" "}
+                  {floor.vaga === 0 || floor.status === "indisponible"
+                    ? "IND."
+                    : "VAGAS :" + ("0" + floor.vaga).slice(-2)}
                 </button>
               ))}
             </div>

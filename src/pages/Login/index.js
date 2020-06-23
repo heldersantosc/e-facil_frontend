@@ -12,6 +12,7 @@ import KeyboardOption from "../../components/KeyboardOption";
 /** ininico da função de login do aluno */
 export default function Login() {
   const [matricula, setMatricula] = useState("");
+  const [matriculaLogada, setMatriculaLogada] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
   const [aluno, setAluno] = useState({});
   const history = useHistory();
@@ -20,6 +21,7 @@ export default function Login() {
   function handleKeyboard(numberValue) {
     if (matricula.length < 8) {
       setMatricula(matricula + numberValue);
+      setMatriculaLogada(matricula + numberValue);
       /** exibe o input */
       setInputVisible(true);
     }
@@ -28,41 +30,67 @@ export default function Login() {
   /** deleta a matricula de tras pra frente */
   function deleteCharacter() {
     setMatricula(matricula.slice(0, -1));
+    setMatriculaLogada(matricula.slice(0, -1));
     if (matricula.length <= 1) {
       setInputVisible(false);
       setAluno({ auth: "", access: false, name: "" });
     }
   }
 
+  async function liberarVaga(matricula) {
+    console.log(matricula);
+    await api
+      .delete("/reservation/" + matricula)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    deleteCharacter();
+    history.push("/checkout");
+  }
+
   /** verifica se a matricula informada é valida ou nao   */
   async function checkAccess() {
-    /** verifica se o tamanho da matricula tem 8 digitos */
-    if (matricula.length === 8) {
-      /** executa função que chama o backend */
-      await api
-        .post("/authorization", {
-          acesso: "aluno",
-          matricula: matricula,
-        })
-        .then((response) => {
-          console.log(response);
-          setAluno(response.data);
-          localStorage.setItem("aluno", response.data.name);
-          localStorage.setItem("matricula", matricula);
-          /** delay de 3 segundos */
-          setTimeout(() => {
-            goToSelectFloor();
-          }, 3000);
-        })
-        .catch((err) => {
-          setAluno({ auth: "", access: false, name: "ACESSO NEGADO" });
-          localStorage.setItem("permissionAccess", false);
-          setMatricula("");
-          setInputVisible(false);
-        });
+    if (localStorage.getItem("permissionAccess") === "true") {
+      /** verifica se o tamanho da matricula tem 8 digitos */
+      if (matricula.length === 8) {
+        /** executa função que chama o backend */
+        await api
+          .post("/authorization", {
+            acesso: "aluno",
+            matricula: matricula,
+          })
+          .then((response) => {
+            setAluno(response.data);
+            localStorage.setItem("aluno", response.data.name);
+            localStorage.setItem("matricula", matricula);
+            if (response.data.access === true) {
+              setTimeout(() => {
+                goToSelectFloor();
+              }, 3000);
+            } else {
+              setInputVisible(false);
+              setMatricula("");
+            }
+          })
+          .catch((err) => {
+            setAluno({
+              auth: "",
+              access: false,
+              name: "VOCÊ TEM UMA RESERVA!",
+            });
+            localStorage.setItem("permissionAccess", true);
+            setMatricula("");
+            setInputVisible(false);
+          });
+      } else {
+        /** oculta o input de matricula */
+        setInputVisible(true);
+      }
     } else {
-      /** oculta o input de matricula */
-      setInputVisible(true);
+      history.push("/checkaccess");
     }
   }
 
@@ -132,6 +160,11 @@ export default function Login() {
           </div>
           <h1>ALUNO</h1>
           <h1>{aluno.name}</h1>
+          {aluno.name === "VOCÊ TEM UMA RESERVA!" ? (
+            <div className="sair" onClick={() => liberarVaga(matriculaLogada)}>
+              Liberar Vaga
+            </div>
+          ) : null}
           {inputVisible ? (
             <>
               <input

@@ -39,8 +39,6 @@ export default function SelectVacancy() {
           data: {
             vaga: id_vaga,
             matricula: localStorage.getItem("matricula"),
-            status: 12,
-            hora: "20:34:00",
           },
         })
         .then((response) => {
